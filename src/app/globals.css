@@ -38,6 +38,50 @@ body {
   line-height: 1.7;
 }
 
+/* Smooth Scroll Snap Container */
+.snap-container {
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+  scroll-padding-top: 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* Scroll Snap Section */
+.snap-section {
+  scroll-snap-align: start;
+  min-height: 100vh;
+  scroll-margin-top: 0;
+}
+
+/* For touch devices - smoother momentum scrolling */
+@supports (-webkit-touch-callout: none) {
+  .snap-container {
+    scroll-snap-type: y proximity;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-primary-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -152,6 +196,7 @@ a {
   gap: 32px;
   list-style: none;
 }
+
 
 .nav-links a {
   color: var(--color-text-secondary);
@@ -293,4 +338,57 @@ a {
   .hero-stats {
     gap: 24px;
   }
+}
+
+/* Gradient Animation */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-shift {
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Light Mode Overrides */
+html.light-mode {
+  --color-primary: #F9FAFB;
+  --color-primary-light: #FFFFFF;
+  --color-primary-dark: #F3F4F6;
+  --color-text: #111827;
+  --color-text-secondary: #4B5563;
+  --color-text-muted: #9CA3AF;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.1);
+}
+
+html.light-mode body {
+  background: var(--color-primary);
+  color: var(--color-text);
+}
+
+html.light-mode ::-webkit-scrollbar-track {
+  background: #E5E7EB;
+}
+
+html.light-mode ::-webkit-scrollbar-thumb {
+  background: #9CA3AF;
+}
+
+html.light-mode ::-webkit-scrollbar-thumb:hover {
+  background: #6B7280;
+}
+
+/* Font override for Inter */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }

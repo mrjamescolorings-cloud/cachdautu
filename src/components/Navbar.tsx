@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { Menu, X, Sparkles } from "lucide-react";
 
 const navLinks = [
     { href: "/", label: "Trang chủ" },
@@ -14,81 +15,84 @@ export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-50">
-            <nav className="glass-card mx-4 mt-4 px-6 py-4" style={{ borderRadius: '12px' }}>
-                <div className="container flex items-center justify-between">
+        <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+            <div className="absolute inset-0 bg-primary/80 backdrop-blur-xl border-b border-white/5" />
+
+            <div className="container mx-auto px-4 relative">
+                <div className="flex items-center justify-between h-20">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2">
-                        <div className="w-10 h-10 rounded-lg flex items-center justify-center"
-                            style={{ background: 'var(--gradient-gold)' }}>
-                            <span className="text-xl font-bold" style={{ color: 'var(--color-primary)' }}>C</span>
+                    <Link href="/" className="flex items-center gap-3 group">
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-purple-500 to-pink-500 text-white font-bold text-xl shadow-lg shadow-purple-500/20 group-hover:shadow-purple-500/40 transition-all">
+                            C
                         </div>
-                        <span className="text-xl font-bold gradient-text-gold">Cách Đầu Tư</span>
+                        <span className="text-xl font-bold text-white tracking-tight">Cách Đầu Tư</span>
                     </Link>
 
                     {/* Desktop Menu */}
-                    <ul className="hidden md:flex items-center gap-8">
+                    <nav className="hidden md:flex items-center gap-8" aria-label="Menu chính">
                         {navLinks.map((link) => (
-                            <li key={link.href}>
-                                <Link
-                                    href={link.href}
-                                    className="text-sm font-medium transition-colors hover:text-[var(--color-accent-gold)]"
-                                    style={{ color: 'var(--color-text-secondary)' }}
-                                >
-                                    {link.label}
-                                </Link>
-                            </li>
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className="text-sm font-medium text-text-secondary hover:text-white transition-colors relative group"
+                            >
+                                {link.label}
+                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 transition-all group-hover:w-full" />
+                            </Link>
                         ))}
-                    </ul>
+                    </nav>
 
                     {/* CTA Button */}
-                    <div className="hidden md:block">
-                        <Link href="/contact" className="btn-primary text-sm">
-                            Bắt đầu ngay
+                    <div className="hidden md:flex items-center gap-4">
+                        <Link
+                            href="/contact"
+                            className="group relative px-6 py-2.5 rounded-full overflow-hidden"
+                        >
+                            {/* Gradient background */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 opacity-100 group-hover:opacity-90 transition-opacity" />
+                            {/* Content */}
+                            <span className="relative z-10 text-white font-medium text-sm flex items-center gap-2">
+                                <Sparkles className="w-4 h-4" />
+                                Bắt đầu ngay
+                            </span>
                         </Link>
                     </div>
 
                     {/* Mobile Menu Button */}
                     <button
-                        className="md:hidden p-2"
+                        className="md:hidden p-2 text-white"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        aria-label="Menu"
+                        aria-label={isMenuOpen ? "Đóng menu" : "Mở menu"}
                     >
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            {isMenuOpen ? (
-                                <path d="M18 6L6 18M6 6l12 12" />
-                            ) : (
-                                <path d="M3 12h18M3 6h18M3 18h18" />
-                            )}
-                        </svg>
+                        {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                     </button>
                 </div>
+            </div>
 
-                {/* Mobile Menu */}
-                {isMenuOpen && (
-                    <div className="md:hidden mt-4 pt-4 border-t" style={{ borderColor: 'var(--glass-border)' }}>
-                        <ul className="flex flex-col gap-4">
-                            {navLinks.map((link) => (
-                                <li key={link.href}>
-                                    <Link
-                                        href={link.href}
-                                        className="block py-2 text-sm font-medium"
-                                        style={{ color: 'var(--color-text-secondary)' }}
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        {link.label}
-                                    </Link>
-                                </li>
-                            ))}
-                            <li>
-                                <Link href="/contact" className="btn-primary text-sm inline-block mt-2">
-                                    Bắt đầu ngay
-                                </Link>
-                            </li>
-                        </ul>
+            {/* Mobile Menu */}
+            {isMenuOpen && (
+                <div className="md:hidden absolute top-full left-0 right-0 bg-primary/95 backdrop-blur-xl border-b border-white/10 animate-fade-in">
+                    <div className="container px-4 py-8 flex flex-col gap-6">
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className="text-lg font-medium text-text-secondary hover:text-white transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
+                        <Link
+                            href="/contact"
+                            className="text-center py-3 rounded-xl bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white font-bold"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            Bắt đầu ngay
+                        </Link>
                     </div>
-                )}
-            </nav>
+                </div>
+            )}
         </header>
     );
 }

@@ -16,20 +16,17 @@ const categoryIcons: Record<string, string> = {
 
 export default function CategoryGrid() {
     return (
-        <section className="section" style={{ background: 'var(--color-primary-dark)' }}>
+        <section className="section bg-primary-dark">
             <div className="container">
                 {/* Section Header */}
                 <div className="text-center mb-12">
-                    <span
-                        className="text-sm font-medium uppercase tracking-wider"
-                        style={{ color: 'var(--color-accent-emerald)' }}
-                    >
+                    <span className="text-sm font-medium uppercase tracking-wider text-accent-emerald">
                         Chuyên mục đầu tư
                     </span>
-                    <h2 className="mt-2">
-                        Khám phá <span className="gradient-text-gold">mọi loại tài sản</span>
+                    <h2 className="mt-2 text-3xl md:text-4xl font-bold">
+                        Khám phá <span className="text-transparent bg-clip-text bg-gradient-gold">mọi loại tài sản</span>
                     </h2>
-                    <p className="mt-4 max-w-2xl mx-auto" style={{ color: 'var(--color-text-secondary)' }}>
+                    <p className="mt-4 max-w-2xl mx-auto text-text-secondary">
                         Từ chứng khoán truyền thống đến crypto, từ bất động sản đến nghệ thuật -
                         chúng tôi hướng dẫn bạn đầu tư vào bất kỳ loại tài sản nào.
                     </p>
@@ -41,18 +38,15 @@ export default function CategoryGrid() {
                         <Link
                             key={category.slug}
                             href={`/blog/${category.slug}`}
-                            className="glass-card p-6 text-center transition-all duration-300 hover:-translate-y-2 hover:border-[var(--color-accent-gold)] group"
+                            className="glass-card p-6 text-center transition-all duration-300 hover:-translate-y-2 hover:border-accent-gold group"
                         >
-                            <div className="text-4xl mb-3">
+                            <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">
                                 {categoryIcons[category.slug] || "📊"}
                             </div>
-                            <h4 className="text-sm font-semibold group-hover:text-[var(--color-accent-gold)] transition-colors">
+                            <h4 className="text-sm font-semibold group-hover:text-accent-gold transition-colors">
                                 {category.name}
                             </h4>
-                            <p
-                                className="text-xs mt-1"
-                                style={{ color: 'var(--color-text-muted)' }}
-                            >
+                            <p className="text-xs mt-1 text-text-muted">
                                 {category.description.split(' ').slice(0, 4).join(' ')}...
                             </p>
                         </Link>
