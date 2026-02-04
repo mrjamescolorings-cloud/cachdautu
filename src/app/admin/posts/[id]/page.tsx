@@ -1,17 +1,14 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
 import { supabase, uploadImage, Category } from "@/lib/supabase";
 import { ArrowLeft, Save, Image, Link2, X, Upload, Clock, Trash2, Eye } from "lucide-react";
 import Link from "next/link";
 
-interface Props {
-    params: Promise<{ id: string }>;
-}
-
-export default function EditPostPage({ params }: Props) {
-    const { id } = use(params);
+export default function EditPostPage() {
+    const params = useParams();
+    const id = params.id as string;
     const router = useRouter();
     const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState(true);

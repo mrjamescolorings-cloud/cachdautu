@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase, Category } from "@/lib/supabase";
-import { Plus, Trash2, Edit, FolderOpen, X, Check } from "lucide-react";
+import { Plus, Trash2, Edit3, FolderOpen, X, Check, Sparkles } from "lucide-react";
 
 export default function CategoriesPage() {
     const [categories, setCategories] = useState<Category[]>([]);
@@ -52,80 +52,169 @@ export default function CategoriesPage() {
         setEditingId(null);
     }
 
+    const emojiOptions = ["📈", "💰", "🏠", "🪙", "📊", "💳", "🎯", "💎", "🌍", "🔐"];
+
     return (
-        <div className="pt-12 lg:pt-0">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+        <div className="space-y-6">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Chuyên mục</h1>
-                    <p className="text-gray-500 text-sm mt-1">{categories.length} chuyên mục</p>
+                    <h1 className="text-2xl font-bold text-gray-900">Chuyên mục</h1>
+                    <p className="text-gray-500 text-sm mt-0.5">{categories.length} chuyên mục</p>
                 </div>
                 {!showForm && (
-                    <button onClick={() => setShowForm(true)} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-emerald-500 text-white font-medium text-sm hover:bg-emerald-600 transition-colors w-fit shadow-sm">
-                        <Plus className="w-4 h-4" />Thêm mới
+                    <button
+                        onClick={() => setShowForm(true)}
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gray-900 text-white font-medium text-sm hover:bg-gray-800 transition-all hover:shadow-lg hover:shadow-gray-900/20 w-fit"
+                    >
+                        <Plus className="w-4 h-4" />
+                        Thêm chuyên mục
                     </button>
                 )}
             </div>
 
+            {/* Add/Edit Form */}
             {showForm && (
-                <div className="bg-white border border-gray-200 rounded-xl p-6 mb-6 shadow-sm">
-                    <h3 className="font-bold text-gray-900 mb-4">{editingId ? 'Chỉnh sửa' : 'Thêm chuyên mục'}</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-xs text-gray-500 mb-1">Tên *</label>
-                            <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value, slug: generateSlug(e.target.value) })} placeholder="Chứng khoán"
-                                className="w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm focus:border-emerald-500 focus:outline-none" />
-                        </div>
-                        <div>
-                            <label className="block text-xs text-gray-500 mb-1">Slug</label>
-                            <input type="text" value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} placeholder="chung-khoan"
-                                className="w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm focus:border-emerald-500 focus:outline-none" />
-                        </div>
-                        <div className="sm:col-span-2">
-                            <label className="block text-xs text-gray-500 mb-1">Mô tả</label>
-                            <input type="text" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Phân tích chứng khoán"
-                                className="w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm focus:border-emerald-500 focus:outline-none" />
-                        </div>
-                        <div>
-                            <label className="block text-xs text-gray-500 mb-1">Icon (emoji)</label>
-                            <input type="text" value={form.icon} onChange={(e) => setForm({ ...form, icon: e.target.value })} placeholder="📈"
-                                className="w-full px-4 py-2.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 text-sm focus:border-emerald-500 focus:outline-none" />
-                        </div>
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+                        <h3 className="font-semibold text-gray-900">{editingId ? 'Chỉnh sửa chuyên mục' : 'Thêm chuyên mục mới'}</h3>
+                        <button onClick={cancelForm} className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors">
+                            <X className="w-4 h-4" />
+                        </button>
                     </div>
-                    <div className="flex gap-3 mt-4">
-                        <button onClick={handleSubmit} className="px-4 py-2 rounded-lg bg-emerald-500 text-white text-sm font-medium hover:bg-emerald-600 flex items-center gap-2">
-                            <Check className="w-4 h-4" />{editingId ? 'Cập nhật' : 'Thêm'}
-                        </button>
-                        <button onClick={cancelForm} className="px-4 py-2 rounded-lg bg-gray-100 text-gray-600 text-sm hover:bg-gray-200 flex items-center gap-2">
-                            <X className="w-4 h-4" />Hủy
-                        </button>
+                    <div className="p-6 space-y-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Tên chuyên mục *</label>
+                                <input
+                                    type="text"
+                                    value={form.name}
+                                    onChange={(e) => setForm({ ...form, name: e.target.value, slug: generateSlug(e.target.value) })}
+                                    placeholder="VD: Chứng khoán"
+                                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 text-sm focus:border-gray-300 focus:bg-white focus:outline-none transition-all"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Slug</label>
+                                <input
+                                    type="text"
+                                    value={form.slug}
+                                    onChange={(e) => setForm({ ...form, slug: e.target.value })}
+                                    placeholder="chung-khoan"
+                                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 text-sm focus:border-gray-300 focus:bg-white focus:outline-none transition-all"
+                                />
+                            </div>
+                            <div className="sm:col-span-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Mô tả</label>
+                                <input
+                                    type="text"
+                                    value={form.description}
+                                    onChange={(e) => setForm({ ...form, description: e.target.value })}
+                                    placeholder="Kiến thức về đầu tư chứng khoán"
+                                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 text-sm focus:border-gray-300 focus:bg-white focus:outline-none transition-all"
+                                />
+                            </div>
+                            <div className="sm:col-span-2">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Icon</label>
+                                <div className="flex items-center gap-3">
+                                    <input
+                                        type="text"
+                                        value={form.icon}
+                                        onChange={(e) => setForm({ ...form, icon: e.target.value })}
+                                        placeholder="📈"
+                                        className="w-24 px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 text-sm text-center focus:border-gray-300 focus:bg-white focus:outline-none transition-all text-xl"
+                                    />
+                                    <div className="flex gap-1.5 flex-wrap">
+                                        {emojiOptions.map(emoji => (
+                                            <button
+                                                key={emoji}
+                                                type="button"
+                                                onClick={() => setForm({ ...form, icon: emoji })}
+                                                className={`w-10 h-10 rounded-lg text-lg flex items-center justify-center transition-all ${form.icon === emoji ? 'bg-gray-900 shadow-lg' : 'bg-gray-100 hover:bg-gray-200'}`}
+                                            >
+                                                {emoji}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex gap-3 pt-2">
+                            <button
+                                onClick={handleSubmit}
+                                className="px-6 py-2.5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 transition-colors flex items-center gap-2"
+                            >
+                                <Check className="w-4 h-4" />
+                                {editingId ? 'Cập nhật' : 'Thêm mới'}
+                            </button>
+                            <button
+                                onClick={cancelForm}
+                                className="px-6 py-2.5 rounded-lg bg-gray-100 text-gray-600 text-sm font-medium hover:bg-gray-200 transition-colors"
+                            >
+                                Hủy
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
 
+            {/* Categories Grid */}
             {loading ? (
-                <div className="text-center py-12 text-gray-500">Đang tải...</div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {[1, 2, 3, 4, 5, 6].map(i => (
+                        <div key={i} className="bg-white rounded-2xl p-5 border border-gray-100 animate-pulse">
+                            <div className="w-14 h-14 bg-gray-100 rounded-xl mb-4" />
+                            <div className="h-5 bg-gray-100 rounded w-2/3 mb-2" />
+                            <div className="h-4 bg-gray-100 rounded w-1/3" />
+                        </div>
+                    ))}
+                </div>
             ) : categories.length === 0 ? (
-                <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
-                    <FolderOpen className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                    <p className="text-gray-500 mb-4">Chưa có chuyên mục</p>
-                    <button onClick={() => setShowForm(true)} className="inline-flex items-center gap-2 text-emerald-600 hover:text-emerald-700 text-sm font-medium">
-                        <Plus className="w-4 h-4" />Tạo chuyên mục đầu tiên
+                <div className="bg-white rounded-2xl border border-gray-100 p-16 text-center">
+                    <div className="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <FolderOpen className="w-10 h-10 text-gray-400" />
+                    </div>
+                    <p className="text-gray-900 font-medium mb-1">Chưa có chuyên mục nào</p>
+                    <p className="text-gray-500 text-sm mb-6">Tạo chuyên mục đầu tiên để phân loại bài viết</p>
+                    <button
+                        onClick={() => setShowForm(true)}
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gray-900 text-white font-medium text-sm hover:bg-gray-800 transition-colors"
+                    >
+                        <Plus className="w-4 h-4" />
+                        Thêm chuyên mục
                     </button>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {categories.map((cat) => (
-                        <div key={cat.id} className="bg-white border border-gray-200 rounded-xl p-5 hover:border-emerald-300 transition-colors group shadow-sm">
-                            <div className="flex items-start justify-between mb-3">
-                                <div className="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center text-2xl">{cat.icon || '📁'}</div>
+                        <div
+                            key={cat.id}
+                            className="bg-white rounded-2xl p-5 border border-gray-100 hover:border-gray-200 hover:shadow-md transition-all group"
+                        >
+                            <div className="flex items-start justify-between mb-4">
+                                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center text-2xl shadow-sm">
+                                    {cat.icon || '📁'}
+                                </div>
                                 <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button onClick={() => startEdit(cat)} className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-700"><Edit className="w-4 h-4" /></button>
-                                    <button onClick={() => deleteCategory(cat.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-gray-400 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
+                                    <button
+                                        onClick={() => startEdit(cat)}
+                                        className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors"
+                                    >
+                                        <Edit3 className="w-4 h-4" />
+                                    </button>
+                                    <button
+                                        onClick={() => deleteCategory(cat.id)}
+                                        className="p-2 rounded-lg hover:bg-red-50 text-gray-400 hover:text-red-500 transition-colors"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                    </button>
                                 </div>
                             </div>
-                            <h3 className="font-bold text-gray-900 mb-1">{cat.name}</h3>
-                            <p className="text-xs text-gray-400 mb-2">/{cat.slug}</p>
-                            {cat.description && <p className="text-sm text-gray-500">{cat.description}</p>}
+                            <h3 className="font-semibold text-gray-900 mb-1">{cat.name}</h3>
+                            <p className="text-xs text-gray-400 mb-2 font-mono">/{cat.slug}</p>
+                            {cat.description && (
+                                <p className="text-sm text-gray-500 line-clamp-2">{cat.description}</p>
+                            )}
                         </div>
                     ))}
                 </div>
