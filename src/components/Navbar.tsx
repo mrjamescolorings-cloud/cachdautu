@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Menu, X, Sparkles } from "lucide-react";
 
@@ -29,8 +30,8 @@ export default function Navbar() {
         >
             <div
                 className={`absolute inset-0 transition-all duration-300 ${isScrolled
-                        ? "bg-primary/80 backdrop-blur-xl border-b border-white/5 shadow-lg"
-                        : "bg-transparent border-transparent"
+                    ? "bg-primary/80 backdrop-blur-xl border-b border-white/5 shadow-lg"
+                    : "bg-transparent border-transparent"
                     }`}
             />
 
@@ -38,8 +39,14 @@ export default function Navbar() {
                 <div className="flex items-center justify-between h-16 md:h-20">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3 group">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-purple-500 to-pink-500 text-white font-bold text-xl shadow-lg shadow-purple-500/20 group-hover:shadow-purple-500/40 transition-all group-hover:scale-105">
-                            C
+                        <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-purple-500/20 group-hover:shadow-purple-500/40 transition-all group-hover:scale-105">
+                            <Image
+                                src="/logo.png"
+                                alt="Cách Đầu Tư Logo"
+                                width={40}
+                                height={40}
+                                className="w-full h-full object-cover"
+                            />
                         </div>
                         <span className="text-xl font-bold text-white tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-purple-200 transition-all">
                             Cách Đầu Tư
