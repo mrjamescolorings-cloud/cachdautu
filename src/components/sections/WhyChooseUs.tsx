@@ -102,18 +102,20 @@ export default function WhyChooseUs() {
                 </AnimatedSection>
 
                 {/* Features - 2 columns on mobile, 4 on desktop */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
-                    {features.map((feature, idx) => (
-                        <AnimatedSection key={idx} animation="fade-in-up" delay={idx * 100}>
-                            <div className="group bg-white/[0.02] border border-white/[0.05] rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6 hover:bg-white/[0.04] hover:border-purple-500/20 transition-all duration-300 h-full">
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center text-purple-400 mb-3 sm:mb-4 group-hover:scale-110 transition-transform" aria-hidden="true">
-                                    {feature.icon}
+                <div className="bg-gradient-to-b from-white/[0.02] to-transparent border border-white/[0.06] rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+                        {features.map((feature, idx) => (
+                            <AnimatedSection key={idx} animation="fade-in-up" delay={idx * 100}>
+                                <div className="group text-center lg:text-left h-full">
+                                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4 mx-auto lg:mx-0 group-hover:scale-110 group-hover:text-pink-400 transition-all duration-300" aria-hidden="true">
+                                        {feature.icon}
+                                    </div>
+                                    <h3 className="text-white font-bold text-sm sm:text-base mb-2">{feature.title}</h3>
+                                    <p className="text-text-muted text-xs sm:text-sm leading-relaxed">{feature.desc}</p>
                                 </div>
-                                <h3 className="text-white font-bold text-sm sm:text-base mb-1 sm:mb-2">{feature.title}</h3>
-                                <p className="text-text-muted text-xs sm:text-sm">{feature.desc}</p>
-                            </div>
-                        </AnimatedSection>
-                    ))}
+                            </AnimatedSection>
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>
